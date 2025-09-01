@@ -1,0 +1,58 @@
+hash function 1:
+ long long hash1(const string &key) const
+    {
+        unsigned long long hashVal = 5381; // Starting value
+        for (char ch : key)
+        {
+            // hashVal * 33 + ch
+            hashVal = ((hashVal << 5) + hashVal) + ch;  
+        }
+        return hashVal % tableSize;
+    }
+
+hash function 2:
+
+    long long hash2(const string& key)
+    {
+
+        unsigned long long hashVal = 0;
+        for (char ch : key) hashVal = (hashVal * 5 + ch) % tableSize;
+        return hashVal;
+    }
+auxhash function :
+
+ long long auxHash(const string &key)const
+    {
+
+        long long hashVal = 0;
+        for (char ch : key)
+        {
+            hashVal = 31 * hashVal + ch;
+        }
+        return hashVal % maxSize;
+    }
+______________________________________________________________________
+| Hash       | Collision         | Hash Function 1 | Hash Function 2 |
+| Table      | Resolution        |___________________________________|
+| Size       | method            | #of    | Avg.   | #of    | Avg.   |
+|            |                   | Colls. | Probes | Colls. | Probes |
+|____________________________________________________________________|
+| N =    5000| Separate Chaining |   547  | 1.425  |   547  | 1.432  | 
+|            |___________________|________|________|________|________|
+|            |  Double Hashing   |  1057  | 1.484  |  1077  | 1.412  | 
+|            |___________________|________|________|________|________|
+|            |  Custom Probing   |  1057  |  1.46  |  1077  | 1.312  | 
+|____________|___________________|________|________|________|________|
+| N =   10000| Separate Chaining |  1056  | 1.423  |  1097  | 1.478  | 
+|            |___________________|________|________|________|________|
+|            |  Double Hashing   |  2089  | 1.422  |  2272  | 1.528  | 
+|            |___________________|________|________|________|________|
+|            |  Custom Probing   |  2089  | 1.432  |  2272  | 1.514  | 
+|____________|___________________|________|________|________|________|
+| N =   20000| Separate Chaining |  2046  | 1.465  |  2212  | 1.502  | 
+|            |___________________|________|________|________|________|
+|            |  Double Hashing   |  4209  | 1.417  |  4482  | 1.486  | 
+|            |___________________|________|________|________|________|
+|            |  Custom Probing   |  4209  | 1.397  |  4482  | 1.456  | 
+|____________|___________________|________|________|________|________|
+
